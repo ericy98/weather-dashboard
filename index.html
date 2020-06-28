@@ -3,11 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous" />
     <link rel="style" href="assets/style.css"/>
     <title>Document</title>
 </head>
 <body>
+    <header class="p-3 bg-info">
+        <h1 class="text-center text-white">Weather Dashboard</h1>
+    </header>
     
+    
+
+    <!-- search bar -->
+    <div class="container-fluid">
+        <div class="row">
+            <div id="city-search" class="col-lg-3 border" >
+                <p class="font-weight-bolder">Search for a City:</p>
+                <input class="city" id="city" type="text"  autofocus="true" class="form-input" />
+                <button class="btn bg-dark" type="submit"><span class="text-white oi oi-magnifying-glass"></span></button>
+            </div>
+            <!-- dynamically created weather forcast -->
+            <div id="forcast" class="col-lg-9 border">
+                FORCAST
+            </div>
+        </div>
+    </div>
+
     <script src="./assets/script.js"></script>
 </body>
 </html>
