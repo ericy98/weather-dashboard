@@ -18,14 +18,20 @@
     <!-- search bar -->
     <div class="container-fluid">
         <div class="row">
-            <div id="city-search" class="col-lg-3 border" >
-                <p class="font-weight-bolder">Search for a City:</p>
-                <input class="city" id="city" type="text"  autofocus="true" class="form-input" />
-                <button class="btn bg-dark" type="submit"><span class="text-white oi oi-magnifying-glass"></span></button>
+            <div  class="col-lg-3 border">
+                <form id="city-search" >
+                    <p class="font-weight-bolder">Search for a City:</p>
+                    <input class="city" id="city" type="text"  autofocus="true" class="form-input" />
+                    <button class="btn bg-dark" type="submit"><span class="text-white oi oi-magnifying-glass"></span></button>
+                </form>
+                <ul class="search-hisory"></ul>
             </div>
+            
+
             <!-- dynamically created weather forcast -->
-            <div id="forcast" class="col-lg-9 border">
-                FORCAST
+            <div class="col-lg-9">
+                <div id="todays-forecast" class="border"></div>
+                <div id="fiveday-forecast" class="border"></div>
             </div>
         </div>
     </div>
