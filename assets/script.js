@@ -3,9 +3,7 @@ var cityInputEl = document.querySelector("#city");
 
 var todayContainer = document.querySelector("#todays-forecast")
 var fiveDayContainer = document.querySelector("#fiveday-forecast")
-
-// get history or set to empty array
-var history = JSON.parse(localStorage.getItem("history")) || [];
+var searchHistory = document.querySelector("#history");
 
 // Today's forecast fetch
 var getTodaysForecast = function(cityName) {
@@ -93,8 +91,6 @@ var getTodaysForecast = function(cityName) {
                 uvIndex(data.coord.lat, data.coord.lon);
                 
                 
-                // console.log(cityName);
-                
             });
         } else {
             alert("Error: " + response.statusText)
@@ -111,14 +107,15 @@ var getFivedayForecast = function(cityName) {
     fetch(apiUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
+
+                fiveDayContainer.textContent = "";
+                var titleEl = document.createElement("h4");
+                titleEl.textContent = "5-Day Forecast: ";
+                titleEl.classList = "m-auto"
+                fiveDayContainer.appendChild(titleEl);
+                
                 for (var i = 0; i < data.list.length; i++) {
-                    // clear out content
-                    // fiveDayContainer.textContent = "";
-                    // var titleEl = document.createElement("h4");
-                    // titleEl.textContent = "5-Day Forecast: ";
-                    // fiveDayContainer.appendChild(titleEl);
-
-
+                
                     if (data.list[i].dt_txt.indexOf("15:00:00") !== -1){
                         
 
@@ -151,6 +148,7 @@ var getFivedayForecast = function(cityName) {
                         div.appendChild(temp);
                         div.appendChild(hum);
                         container.appendChild(div);
+                        
                         fiveDayContainer.appendChild(container);
                     }
 
@@ -177,20 +175,39 @@ var citySubmitHandler = function(event){
         getTodaysForecast(upper);
         getFivedayForecast(city);
         cityInputEl.value = "";
+        // cityHistory(city);
+
     } else {
         alert("Please enter a city")
     }
     // console.log(event);
 }
 
+// // search bar history
+// var cityHistory = function(city) {
+//     if (historyList.indexOf(city) === -1) {
+//         historyList.push(city);
+//         localStorage.setItem("history", JSON.stringify(history));
+//         historyList(city);
+//     }
+    
+// }
 
-// search bar history
-var cityHistory = function(text) {
-    var li = document.createElement("li");
-    li.classList("search-history-item");
-    li.textContent(text);
-    history.appendChild(li);
-}
+
+// var historyList = function(text) {
+//     var li = document.createElement("li");
+//     li.classList= "search-history-item";
+//     li.textContent = text;
+//     searchHistory.appendChild(li);
+    
+// }
+
+//  // get history or set to empty array
+//  var history = JSON.parse(localStorage.getItem("history")) || []; 
+
+//  for ( var i = 0; i < history.length; i++){
+//      historyList(history[i]);
+//  }
 
 
 cityFormEl.addEventListener("submit", citySubmitHandler)
