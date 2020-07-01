@@ -113,12 +113,12 @@ var getFivedayForecast = function(cityName) {
                 titleEl.textContent = "5-Day Forecast: ";
                 titleEl.classList = "m-auto"
                 fiveDayContainer.appendChild(titleEl);
-                
+
                 for (var i = 0; i < data.list.length; i++) {
                 
                     if (data.list[i].dt_txt.indexOf("15:00:00") !== -1){
                         
-
+                        fiveDayContainer.classList = " row border border-left-0"
                         var container = document.createElement("div");
                         container.classList = "text-left col-md"
 
