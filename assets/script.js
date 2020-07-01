@@ -20,9 +20,13 @@ var getTodaysForecast = function(cityName) {
 
                     var nameEl = cityName;
                         
+                    var icon = document.createElement("img")
+                    icon.src = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
                     var titleEl = document.createElement("h3");
-                    titleEl.textContent = nameEl
+                    titleEl.textContent = nameEl + " (" + new Date().toLocaleDateString() +")";
 
+
+                    
                     var containerEl = document.createElement("div");
                     containerEl.classList = "text-left"
 
@@ -38,7 +42,7 @@ var getTodaysForecast = function(cityName) {
                     wind.classList = "p-1";
                     wind.textContent = "Wind Speed: " + data.wind.speed + " MPH";
 
-                        
+                    titleEl.appendChild(icon);    
                     containerEl.appendChild(temp);
                     containerEl.appendChild(humidity);
                     containerEl.appendChild(wind);
@@ -102,6 +106,63 @@ var getTodaysForecast = function(cityName) {
     
 };
 
+var getFivedayForecast = function(cityName) {
+    var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial" + "&appid=96edaf2546f002ef2fa639940d7c6b1d";
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                for (var i = 0; i < data.list.length; i++) {
+                    // clear out content
+                    // fiveDayContainer.textContent = "";
+                    // var titleEl = document.createElement("h4");
+                    // titleEl.textContent = "5-Day Forecast: ";
+                    // fiveDayContainer.appendChild(titleEl);
+
+
+                    if (data.list[i].dt_txt.indexOf("15:00:00") !== -1){
+                        
+
+                        var container = document.createElement("div");
+                        container.classList = "text-left col-md"
+
+                        var div = document.createElement("div");
+                        div.classList = "bg-info text-white p-1";
+
+                        var date = document.createElement("h5");
+                        date.textContent = new Date(data.list[i].dt_txt).toLocaleDateString();
+                        date.classList = "p-1";
+
+                        var icon = document.createElement("img");
+                        icon.src = "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png";
+                        icon.classList = "p-1";
+
+                        var temp = document.createElement("p");
+                        temp.textContent = "Temp: " + data.list[i].main.temp + " °F";
+                        temp.classList = "p-1";
+
+                        var hum = document.createElement("p");
+                        hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
+                        hum.classList = "p-1";
+
+                        
+                        
+                        div.appendChild(date);
+                        div.appendChild(icon);
+                        div.appendChild(temp);
+                        div.appendChild(hum);
+                        container.appendChild(div);
+                        fiveDayContainer.appendChild(container);
+                    }
+
+
+
+                }
+            })
+        }
+    })
+    
+    console.log(apiUrl)
+}
 
 
 // search bar function handler
@@ -114,6 +175,7 @@ var citySubmitHandler = function(event){
 
     if (upper) {
         getTodaysForecast(upper);
+        getFivedayForecast(city);
         cityInputEl.value = "";
     } else {
         alert("Please enter a city")
@@ -121,35 +183,6 @@ var citySubmitHandler = function(event){
     // console.log(event);
 }
 
-// // display todays forecast on page
-// var displayTodaysForecast = function(city) {
-
-    
-//     // clear out content
-//     todayContainer.textContent = "";
-
-//     for (var i = 0; i < city.length; i++) {
-
-//         var nameEl = city.name;
-//         console.log(nameEl);
-//         var titleEl = document.createElement("h3");
-//         titleEl.textContent = nameEl
-
-//         var containerEl = document.createElement("div");
-//         containerEl.classList = "text-left"
-
-//         var temp = document.createElement("p");
-//         temp.textContent = city.main.temp;
-
-        
-        
-//         containerEl.appendChild(temp);
-//         todayContainer.appendChild(titleEl);
-//         todayContainer.appendChild(containerEl);
-//     }   
-//     console.log(temp);
-//     console.log(titleEl);
-// }
 
 // search bar history
 var cityHistory = function(text) {
@@ -162,19 +195,3 @@ var cityHistory = function(text) {
 
 cityFormEl.addEventListener("submit", citySubmitHandler)
 
-// loop over 5day forcast
-// for (var i = 0; i < city.length; i++) {
-        
-//     var cityName = city[i].name;
-
-//     // container
-//     var container = document.createElement("div");
-//     container.classList = "col-md-2";
-    
-//     var cityEl = document.createElement("div");
-//     cityEl.textContent = cityName;
-
-//     container.appendChild(cityEl);
-//     todayContainer.appendChild(container);
-
-// }
